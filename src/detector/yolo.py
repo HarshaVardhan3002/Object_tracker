@@ -14,11 +14,10 @@ can be swapped independently.
 
 from __future__ import annotations
 
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
-from typing import Iterable, List, Optional, Sequence
 
 import numpy as np
-
 
 # COCO class names that YOLOv8 is pretrained on. Kept here so callers can
 # reference classes by name without importing ultralytics at module load time.
@@ -73,10 +72,10 @@ class YOLODetector:
     def __init__(
         self,
         weights: str = "yolov8n.pt",
-        device: Optional[str] = None,
+        device: str | None = None,
         conf_threshold: float = 0.35,
         iou_threshold: float = 0.5,
-        class_filter: Optional[Sequence[str]] = None,
+        class_filter: Sequence[str] | None = None,
         imgsz: int = 640,
     ) -> None:
         # Lazy import so the package imports cleanly without torch installed.
@@ -93,7 +92,7 @@ class YOLODetector:
             else None
         )
 
-    def detect(self, frame: np.ndarray) -> List[Detection]:
+    def detect(self, frame: np.ndarray) -> list[Detection]:
         """Run one forward pass and return detections above the threshold.
 
         Args:
@@ -107,7 +106,7 @@ class YOLODetector:
             device=self.device,
             verbose=False,
         )
-        detections: List[Detection] = []
+        detections: list[Detection] = []
         if not results:
             return detections
 
@@ -133,7 +132,7 @@ class YOLODetector:
             )
         return detections
 
-    def set_class_filter(self, classes: Optional[Iterable[str]]) -> None:
+    def set_class_filter(self, classes: Iterable[str] | None) -> None:
         """Update the class filter at runtime (used by the Streamlit UI)."""
         if classes is None:
             self.class_filter = None

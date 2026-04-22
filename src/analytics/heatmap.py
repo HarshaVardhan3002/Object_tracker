@@ -7,7 +7,7 @@ adapts to changing scene activity rather than saturating forever.
 
 from __future__ import annotations
 
-from typing import Iterable, Optional, Tuple
+from collections.abc import Iterable
 
 import cv2
 import numpy as np
@@ -16,7 +16,7 @@ import numpy as np
 class MotionHeatmap:
     def __init__(
         self,
-        frame_shape: Tuple[int, int],
+        frame_shape: tuple[int, int],
         blob_sigma: float = 25.0,
         decay: float = 0.995,
     ) -> None:
@@ -44,7 +44,7 @@ class MotionHeatmap:
             radius = max(2, int(self.blob_sigma / 5))
             cv2.circle(self._accum, (x, y), radius, 1.0, -1)
 
-    def render(self, frame: Optional[np.ndarray] = None, alpha: float = 0.5) -> np.ndarray:
+    def render(self, frame: np.ndarray | None = None, alpha: float = 0.5) -> np.ndarray:
         """Return the heatmap as a colored image.
 
         If ``frame`` is provided, the heatmap is overlaid onto it with the

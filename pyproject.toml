@@ -9,7 +9,7 @@ description = "Real-time multi-object tracking with YOLOv8 + ByteTrack and a liv
 readme = "README.md"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
-authors = [{ name = "Hitesh Kaplesh", email = "hiteshkaplesh@gmail.com" }]
+authors = [{ name = "Sai Harshavardhan", email = "HarshaVardhan3002@users.noreply.github.com" }]
 keywords = ["tracking", "MOT", "yolo", "computer-vision", "streamlit"]
 classifiers = [
     "Programming Language :: Python :: 3",

@@ -11,7 +11,7 @@ samples, which prevents the arrow from flickering on noisy detections.
 from __future__ import annotations
 
 from collections import defaultdict, deque
-from typing import Deque, Dict, Iterable, Tuple
+from collections.abc import Iterable
 
 import numpy as np
 
@@ -20,11 +20,11 @@ class SpeedEstimator:
     def __init__(self, fps: float = 30.0, window: int = 8) -> None:
         self.fps = max(1.0, float(fps))
         self.window = window
-        self._centers: Dict[int, Deque[Tuple[float, float]]] = defaultdict(
+        self._centers: dict[int, deque[tuple[float, float]]] = defaultdict(
             lambda: deque(maxlen=window)
         )
-        self._speed: Dict[int, float] = {}
-        self._direction: Dict[int, Tuple[float, float]] = {}
+        self._speed: dict[int, float] = {}
+        self._direction: dict[int, tuple[float, float]] = {}
 
     def update(self, tracks: Iterable) -> None:
         for t in tracks:
@@ -57,10 +57,10 @@ class SpeedEstimator:
     def speed_of(self, track_id: int) -> float:
         return self._speed.get(track_id, 0.0)
 
-    def direction_of(self, track_id: int) -> Tuple[float, float]:
+    def direction_of(self, track_id: int) -> tuple[float, float]:
         return self._direction.get(track_id, (0.0, 0.0))
 
-    def summary(self) -> Dict[str, float]:
+    def summary(self) -> dict[str, float]:
         """Aggregate metrics for the analytics panel."""
         if not self._speed:
             return {"mean_speed": 0.0, "max_speed": 0.0, "num_moving": 0}

@@ -14,7 +14,7 @@ import pytest
 
 from src.analytics import MotionHeatmap, ObjectCounter, SpeedEstimator, TrajectoryStore
 from src.tracker import ByteTracker
-from src.tracker.matching import iou, iou_distance, linear_assignment
+from src.tracker.matching import iou, linear_assignment
 
 
 @dataclass

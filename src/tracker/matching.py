@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import List, Sequence, Tuple
+from collections.abc import Sequence
 
 import numpy as np
 
@@ -33,7 +33,7 @@ def iou_distance(tracks_xyxy: Sequence[np.ndarray], dets_xyxy: Sequence[np.ndarr
 
 def linear_assignment(
     cost_matrix: np.ndarray, thresh: float
-) -> Tuple[List[Tuple[int, int]], List[int], List[int]]:
+) -> tuple[list[tuple[int, int]], list[int], list[int]]:
     """Hungarian assignment with a threshold.
 
     Returns:
@@ -52,7 +52,7 @@ def linear_assignment(
 
     row_ind, col_ind = linear_sum_assignment(cost_matrix)
 
-    matches: List[Tuple[int, int]] = []
+    matches: list[tuple[int, int]] = []
     matched_a: set[int] = set()
     matched_b: set[int] = set()
     for r, c in zip(row_ind, col_ind):

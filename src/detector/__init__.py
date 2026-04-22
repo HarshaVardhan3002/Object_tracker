@@ -1,3 +1,3 @@
-from .yolo import YOLODetector, Detection
+from .yolo import Detection, YOLODetector
 
 __all__ = ["YOLODetector", "Detection"]

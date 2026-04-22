@@ -1,7 +1,7 @@
 from .counter import ObjectCounter
 from .heatmap import MotionHeatmap
-from .trajectory import TrajectoryStore
 from .speed import SpeedEstimator
+from .trajectory import TrajectoryStore
 
 __all__ = [
     "ObjectCounter",

@@ -23,13 +23,11 @@ import time
 from pathlib import Path
 
 import cv2
-import numpy as np
 import pandas as pd
 import streamlit as st
 
 from src.detector.yolo import COCO_CLASSES
 from src.pipeline import PipelineConfig, TrackingPipeline
-
 
 # ---------------------------------------------------------------------------
 # Page setup

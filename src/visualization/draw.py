@@ -2,11 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Dict, Iterable, Tuple
+from collections.abc import Iterable
 
 import cv2
 import numpy as np
-
 
 # A hand-picked high-contrast palette (RGB). We pick per-id deterministically
 # so the same track ID keeps the same color across the whole video.
@@ -29,7 +28,7 @@ _PALETTE = np.array(
 )
 
 
-def color_for_id(track_id: int) -> Tuple[int, int, int]:
+def color_for_id(track_id: int) -> tuple[int, int, int]:
     """Deterministic BGR color for a given track id."""
     rgb = _PALETTE[track_id % len(_PALETTE)]
     return (int(rgb[2]), int(rgb[1]), int(rgb[0]))
@@ -89,7 +88,7 @@ def draw_tracks(
 
 def draw_trajectories(
     frame: np.ndarray,
-    trails: Dict[int, "deque"],  # noqa: F821
+    trails: dict[int, deque],  # noqa: F821
     fade: bool = True,
 ) -> np.ndarray:
     """Overlay polyline trails for every tracked id.

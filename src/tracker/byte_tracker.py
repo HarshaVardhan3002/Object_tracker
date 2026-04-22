@@ -21,7 +21,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Dict, List, Optional
 
 import numpy as np
 
@@ -52,7 +51,7 @@ class Track:
     frame_id: int = 0
     start_frame: int = 0
     time_since_update: int = 0
-    history: List[tuple[float, float]] = field(default_factory=list)
+    history: list[tuple[float, float]] = field(default_factory=list)
 
     # ------------------------------------------------------------------
     # Geometry helpers
@@ -127,8 +126,8 @@ class ByteTracker:
         self.max_lost_frames = max_lost_frames
         self.min_box_area = min_box_area
 
-        self._tracked: List[Track] = []
-        self._lost: List[Track] = []
+        self._tracked: list[Track] = []
+        self._lost: list[Track] = []
         self._next_id = 1
         self._frame_id = 0
         self._kf = KalmanFilter()
@@ -136,7 +135,7 @@ class ByteTracker:
     # ------------------------------------------------------------------
     # API
     # ------------------------------------------------------------------
-    def update(self, detections) -> List[Track]:
+    def update(self, detections) -> list[Track]:
         """Update the tracker with detections from one frame.
 
         ``detections`` is an iterable of :class:`~src.detector.yolo.Detection`.
@@ -164,8 +163,8 @@ class ByteTracker:
         pool = self._tracked + self._lost
         matches, u_track, u_det = self._associate(pool, high_dets, self.match_thresh)
 
-        activated: List[Track] = []
-        refound: List[Track] = []
+        activated: list[Track] = []
+        refound: list[Track] = []
         for ti, di in matches:
             t, d = pool[ti], high_dets[di]
             t.update(d.tlwh, d.confidence, self._frame_id)
@@ -190,7 +189,7 @@ class ByteTracker:
                 t.mark_lost()
 
         # ---- Spawn new tracks from unmatched high-conf dets -----------------
-        new_tracks: List[Track] = []
+        new_tracks: list[Track] = []
         unmatched_high = [high_dets[i] for i in u_det]
         for d in unmatched_high:
             t = Track(
@@ -225,7 +224,7 @@ class ByteTracker:
         self._lost.extend(newly_lost)
 
         # Deduplicate by id (a track can live in both pools briefly).
-        seen: Dict[int, Track] = {}
+        seen: dict[int, Track] = {}
         for t in self._tracked:
             seen[t.track_id] = t
         self._tracked = list(seen.values())
@@ -235,7 +234,7 @@ class ByteTracker:
     # ------------------------------------------------------------------
     # Internal helpers
     # ------------------------------------------------------------------
-    def _associate(self, tracks: List[Track], detections, thresh: float):
+    def _associate(self, tracks: list[Track], detections, thresh: float):
         """Class-aware IoU association."""
         if not tracks or not detections:
             return (
@@ -258,5 +257,5 @@ class ByteTracker:
 
     # Expose the current lost pool for callers that want to visualize it.
     @property
-    def lost_tracks(self) -> List[Track]:
+    def lost_tracks(self) -> list[Track]:
         return list(self._lost)

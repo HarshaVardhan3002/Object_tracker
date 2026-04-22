@@ -11,12 +11,12 @@ The counter tracks two things:
 from __future__ import annotations
 
 from collections import Counter, defaultdict
-from typing import Dict, Iterable, Tuple
+from collections.abc import Iterable
 
 
 class ObjectCounter:
     def __init__(self) -> None:
-        self._seen_ids: Dict[str, set[int]] = defaultdict(set)
+        self._seen_ids: dict[str, set[int]] = defaultdict(set)
         self._current: Counter[str] = Counter()
 
     def update(self, tracks: Iterable) -> None:
@@ -27,14 +27,14 @@ class ObjectCounter:
         self._current = current
 
     @property
-    def current(self) -> Dict[str, int]:
+    def current(self) -> dict[str, int]:
         return dict(self._current)
 
     @property
-    def total_unique(self) -> Dict[str, int]:
+    def total_unique(self) -> dict[str, int]:
         return {k: len(v) for k, v in self._seen_ids.items()}
 
-    def as_table(self) -> Tuple[list[str], list[int], list[int]]:
+    def as_table(self) -> tuple[list[str], list[int], list[int]]:
         """Return (classes, current_counts, total_counts) sorted by total."""
         classes = sorted(
             set(self._current) | set(self._seen_ids),

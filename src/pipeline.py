@@ -15,8 +15,8 @@ another application (e.g. a FastAPI endpoint).
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from dataclasses import dataclass, field
-from typing import List, Optional, Sequence
 
 import cv2
 import numpy as np
@@ -33,8 +33,8 @@ class PipelineConfig:
     conf_threshold: float = 0.35
     iou_threshold: float = 0.5
     imgsz: int = 640
-    device: Optional[str] = None
-    class_filter: Optional[Sequence[str]] = None
+    device: str | None = None
+    class_filter: Sequence[str] | None = None
 
     # Tracker
     high_thresh: float = 0.5
@@ -61,7 +61,7 @@ class FrameResult:
 
 
 class TrackingPipeline:
-    def __init__(self, config: Optional[PipelineConfig] = None, fps: float = 30.0) -> None:
+    def __init__(self, config: PipelineConfig | None = None, fps: float = 30.0) -> None:
         self.config = config or PipelineConfig()
         self.fps = fps
         self._init_components()
@@ -85,7 +85,7 @@ class TrackingPipeline:
         self.counter = ObjectCounter()
         self.trajectory = TrajectoryStore(max_points=c.trail_length)
         self.speed = SpeedEstimator(fps=self.fps)
-        self._heatmap: Optional[MotionHeatmap] = None
+        self._heatmap: MotionHeatmap | None = None
 
     def reset(self) -> None:
         """Reset all tracking state -- used when a new video is uploaded."""
@@ -131,8 +131,8 @@ class TrackingPipeline:
     def process_video(
         self,
         source: str,
-        output_path: Optional[str] = None,
-        max_frames: Optional[int] = None,
+        output_path: str | None = None,
+        max_frames: int | None = None,
         progress=None,
     ) -> dict:
         """Run the pipeline on a full video file.
@@ -157,7 +157,7 @@ class TrackingPipeline:
             writer = cv2.VideoWriter(output_path, fourcc, fps, (w, h))
 
         frame_idx = 0
-        last_result: Optional[FrameResult] = None
+        last_result: FrameResult | None = None
         try:
             while True:
                 ok, frame = cap.read()

@@ -3,16 +3,16 @@
 from __future__ import annotations
 
 from collections import defaultdict, deque
-from typing import Deque, Dict, Iterable, Tuple
+from collections.abc import Iterable
 
 
 class TrajectoryStore:
     def __init__(self, max_points: int = 60) -> None:
         self.max_points = max_points
-        self._trails: Dict[int, Deque[Tuple[float, float]]] = defaultdict(
+        self._trails: dict[int, deque[tuple[float, float]]] = defaultdict(
             lambda: deque(maxlen=self.max_points)
         )
-        self._classes: Dict[int, str] = {}
+        self._classes: dict[int, str] = {}
 
     def update(self, tracks: Iterable) -> None:
         active_ids = set()
@@ -30,7 +30,7 @@ class TrajectoryStore:
             while len(trail) > 5:
                 trail.popleft()
 
-    def trails(self) -> Dict[int, Deque[Tuple[float, float]]]:
+    def trails(self) -> dict[int, deque[tuple[float, float]]]:
         return self._trails
 
     def class_of(self, track_id: int) -> str:

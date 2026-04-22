@@ -179,4 +179,4 @@ The suite covers the full tracker / analytics stack without requiring YOLOv8 wei
 
 ---
 
-Built with ❤️ by **Hitesh Kaplesh**. If this is useful to you, a ⭐ on the repo means a lot.
+Built with ❤️ by **Sai Harshavardhan** ([@HarshaVardhan3002](https://github.com/HarshaVardhan3002)). If this is useful to you, a ⭐ on the repo means a lot.

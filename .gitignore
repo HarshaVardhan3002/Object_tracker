@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.eggs/
+*.egg-info/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tracking / ML outputs
+results/
+runs/
+weights/
+*.pt
+*.onnx
+*.engine
+
+# Model cache
+.torch/
+.ultralytics/
+
+# Local videos
+*.mp4
+*.mov
+*.avi
+*.mkv
+!assets/*.gif
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+
+# Docker
+.docker/
+
+# Logs
+*.log

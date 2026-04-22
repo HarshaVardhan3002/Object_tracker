@@ -1,0 +1,15 @@
+services:
+  visiontrack:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: visiontrack:latest
+    container_name: visiontrack
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../assets:/app/assets:ro
+      - ./weights:/app/weights
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
